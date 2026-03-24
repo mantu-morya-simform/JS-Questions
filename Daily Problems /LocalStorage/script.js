@@ -1,15 +1,16 @@
 const myLocalStorage = {
+  prefix: "local_",
   customSetItem(key, value, expiryTime) {
     let data = { tokenID: value.tokenID, expiry: Date.now() + expiryTime };
-    localStorage.setItem(key, JSON.stringify(data));
+    localStorage.setItem(this.prefix + key, JSON.stringify(data));
   },
-  customGetItem() {
-    data = JSON.parse(localStorage.getItem("token"));
+  customGetItem(token) {
+    data = JSON.parse(localStorage.getItem(this.prefix + token));
     if (Date.now() > data.expiry) {
-      localStorage.removeItem("token");
+      localStorage.removeItem(this.prefix + token);
     }
-    data = localStorage.getItem("token");
-    console.log(data);
+    data = localStorage.getItem(this.prefix + token);
+    return data;
   },
 };
 
@@ -17,9 +18,9 @@ const myLocalStorage = {
 myLocalStorage.customSetItem("token", { tokenID: "154752254545454abc" }, 1000);
 
 //acess token before 1 sec
-myLocalStorage.customGetItem();
+console.log(myLocalStorage.customGetItem("token"));
 
 //acess token After 1 sec
 setTimeout(() => {
-  myLocalStorage.customGetItem();
+  console.log(myLocalStorage.customGetItem("token"));
 }, 1100);
