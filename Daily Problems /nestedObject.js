@@ -30,15 +30,11 @@ const getObjvalue = (obj, keys, defvalue) => {
     keys = keys.replaceAll("[", ".").replaceAll("]", "").split(".");
   }
 
-  if (defvalue) {
-    return defvalue;
-  }
-
   let result = obj;
   for (let key of keys) {
     result = result[key];
   }
-  return result;
+  return result === undefined ? defvalue : result;
 };
 
 console.log(getObjvalue(obj, "a.b")); // {c: [1,2,3]}
