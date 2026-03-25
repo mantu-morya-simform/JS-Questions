@@ -24,20 +24,33 @@ const obj = {
   },
 };
 
-const get = (obj, opr, defvalue) => {
-  if (typeof opr == "string") {
-    let keys = opr.replaceAll("[", ".").replaceAll("]", "").split(".");
-    console.log(keys);
-    // console.log(keys);
-    // let result = obj;
-    // for (let key of keys) {
-    //   result = result[key];
-    // }
-    // console.log(result);
-  } else if (Array.isArray(opr)) {
-    let keys = ".".concat(opr.join("."));
-    console.log(keys);
+const getObjvalue = (obj, keys, defvalue) => {
+  //if keys in string convert it into Arrays
+  if (typeof keys === "string") {
+    keys = keys.replaceAll("[", ".").replaceAll("]", "").split(".");
   }
+
+  if (defvalue) {
+    return defvalue;
+  }
+
+  let result = obj;
+  for (let key of keys) {
+    result = result[key];
+  }
+  return result;
 };
 
-get(obj, ["a", "b", "c", "5"]);
+console.log(getObjvalue(obj, "a.b")); // {c: [1,2,3]}
+console.log(getObjvalue(obj, "a.b.c")); // [1,2,3]
+console.log(getObjvalue(obj, "a.b.c.0")); // 1
+console.log(getObjvalue(obj, ["a", "b"])); // {c: [1,2,3]}
+console.log(getObjvalue(obj, ["a", "b", "c", "2"])); // 3
+console.log(getObjvalue(obj, ["a", "b", "c", "5"])); // undefined
+console.log(getObjvalue(obj, "a.b.c.d")); // undefined
+console.log(getObjvalue(obj, ["a", "c"])); // undefined
+console.log(getObjvalue(obj, ["a", "c"], "abc")); // abc
+console.log(getObjvalue(obj, "a.b.c[1]")); // 2
+console.log(getObjvalue(obj, "a.b.c[3]")); //undefined
+console.log(getObjvalue(obj, "a.b[c]")); //[1,2,3]
+console.log(getObjvalue(obj, "a.b[c][0]")); //1
