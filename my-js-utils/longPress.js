@@ -19,3 +19,4 @@ const executeOnLongPress = (id) => {
     }
   });
 };
+window.executeOnLongPress = executeOnLongPress;
