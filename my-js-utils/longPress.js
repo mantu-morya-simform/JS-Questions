@@ -10,7 +10,7 @@ const executeOnLongPress = (element, time, callback) => {
     let duration = (upTime - downTime) / 1000; //time in second
 
     if (duration >= time) {
-      callback(duration);
+      callback();
     }
   });
 };
