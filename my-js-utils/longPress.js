@@ -1,4 +1,4 @@
-const executeOnLongPress = (element, time, callback, ...args) => {
+export const executeOnLongPress = (element, time, callback, ...args) => {
   let downTime = 0;
 
   element.addEventListener("mousedown", (e) => {
@@ -14,5 +14,3 @@ const executeOnLongPress = (element, time, callback, ...args) => {
     }
   });
 };
-
-window.executeOnLongPress = executeOnLongPress;
