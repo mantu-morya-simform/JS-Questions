@@ -1,4 +1,4 @@
-const executeOnLongPress = (element, time, callback) => {
+const executeOnLongPress = (element, time, callback, ...args) => {
   let downTime = 0;
 
   element.addEventListener("mousedown", (e) => {
@@ -10,7 +10,7 @@ const executeOnLongPress = (element, time, callback) => {
     let duration = (upTime - downTime) / 1000; //time in second
 
     if (duration >= time) {
-      callback();
+      callback(...args);
     }
   });
 };
