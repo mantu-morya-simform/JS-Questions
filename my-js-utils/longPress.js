@@ -1,16 +1,16 @@
 const executeOnLongPress = (element, time, callback) => {
   let timer = null;
-  let isPrassed = false;
+  let isPressed = false;
 
   const startPress = () => {
-    isPrassed = true;
+    isPressed = true;
     timer = setTimeout(() => {
-      if (isPrassed) callback();
+      if (isPressed) callback();
     }, time * 1000);
   };
 
   const stopPress = () => {
-    isPrassed = false;
+    isPressed = false;
     clearTimeout(timer);
   };
 
@@ -24,4 +24,4 @@ const executeOnLongPress = (element, time, callback) => {
   element.addEventListener("pointerleave", stopPress);
 };
 
-export default { executeOnLongPress };
+export { executeOnLongPress };
