@@ -1,16 +1,27 @@
-export const executeOnLongPress = (element, time, callback, ...args) => {
-  let downTime = 0;
+const executeOnLongPress = (element, time, callback) => {
+  let timer = null;
+  let isPrassed = false;
 
-  element.addEventListener("mousedown", (e) => {
-    downTime = e.timeStamp;
-  });
+  const startPress = () => {
+    isPrassed = true;
+    timer = setTimeout(() => {
+      if (isPrassed) callback();
+    }, time * 1000);
+  };
 
-  element.addEventListener("mouseup", (e) => {
-    let upTime = e.timeStamp;
-    let duration = (upTime - downTime) / 1000; //time in second
+  const stopPress = () => {
+    isPrassed = false;
+    clearTimeout(timer);
+  };
 
-    if (duration >= time) {
-      callback(...args);
-    }
-  });
+  // Pointer down = start
+  element.addEventListener("pointerdown", startPress);
+
+  // Pointer up anywhere on page = stop
+  window.addEventListener("pointerup", stopPress);
+
+  // If user moves pointer off element → stop
+  element.addEventListener("pointerleave", stopPress);
 };
+
+export default { executeOnLongPress };
