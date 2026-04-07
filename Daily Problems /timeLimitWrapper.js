@@ -40,4 +40,10 @@ const myFunction = (msg) => {
 
 const newFunction = timeLimit(myFunction, 200);
 
-newFunction("will resolve?").then(console.log).catch(console.error);
+newFunction("will resolve?")
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
