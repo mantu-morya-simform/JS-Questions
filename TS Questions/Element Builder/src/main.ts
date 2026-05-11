@@ -48,3 +48,5 @@ const div = new ElementBuilder("div")
   .addChild("p", "Hello World")
   .style("color", "blue")
   .build();
+
+document.body.appendChild(div);
