@@ -1,21 +1,20 @@
 const button = document.querySelector<HTMLButtonElement>(".fetch__button");
-const delay = 300;
 function fetchApi() {
   console.log(`Fetch Api Data...`);
 }
 
-function throttle(fetchApi: () => void, delay: number) {
+function throttle<T extends (...args: any[]) => void>(fn: T, delay: number) {
   let flag: boolean = true;
-  return function () {
+  return function (this: unknown, ...args: any[]) {
     if (flag) {
       flag = false;
       setTimeout(() => {
-        fetchApi();
+        fn.call(this, ...args);
         flag = true;
       }, delay);
     }
   };
 }
 
-const betterThrottle = throttle(fetchApi, delay);
+const betterThrottle = throttle(fetchApi, 500);
 button?.addEventListener("click", betterThrottle);
